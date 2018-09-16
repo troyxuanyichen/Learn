@@ -47,18 +47,22 @@ async function edit(workbook, tabName, map) {
     {header: 'Status', key: 'status', width: 10},
     {header: 'Action', key: 'action', width: 20},
   ];
+  worksheet.getCell('A1').fill = {
+    fgColor: {argb: 'FFFFFF00'},
+    bgColor: {argb: 'FFFF0000'}
+  };
   let cur_title = map.get('title');
   let cur_status = map.get('status');
   let cur_entry = map.get('entry');
   worksheet.addRow({title: cur_title, status: cur_status[0], action: cur_status[1]});
   if (cur_status[1] === 'good') {
     let row = worksheet.lastRow;
-    row.eachCell(function (cell) {
-      cell.fill.bgColor = {argb: 'FF008000'}
-    })
     // row.fill = {bgColor: {argb: 'FF008000'}};
   } else {
     let row = worksheet.lastRow;
+    row.eachCell(function (cell) {
+      cell.fill = {bgColor: {argb: 'FFFF0000'}};
+    })
     // row.eachCell((cell => cell.fill.bgColor = {argb: 'FFFF0000'}))
   }
   for (let entry of cur_entry) {
